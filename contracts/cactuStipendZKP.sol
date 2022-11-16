@@ -9,7 +9,7 @@ import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 import "./GenesisUtils.sol";
 import "./ICircuitValidator.sol";
 
-contract CactuStipend is ChainlinkClient, ConfirmedOwner {
+contract CactuStipendZKP is ChainlinkClient, ConfirmedOwner {
     using Chainlink for Chainlink.Request;
 
     constructor() ConfirmedOwner(msg.sender) {
