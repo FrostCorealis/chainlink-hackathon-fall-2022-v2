@@ -38,7 +38,7 @@ const Create = () => {
         };
 
     const successMintToast = async () => {
-        toast("Done minting!", {
+        toast("Minting is complete!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -52,7 +52,7 @@ const Create = () => {
     const startCreateToast = async () => {
         toast("Setting up your CactuStipend...", {
             position: "top-right",
-            autoClose: 9500,
+            autoClose: 10500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -87,7 +87,7 @@ const Create = () => {
         };
 
     const successApproveToast = async () => {
-        toast("Your tokens have been approved & you can now create a CactuStipend!", {
+        toast("Your tokens have been approved! You can now create a CactuStipend!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -99,9 +99,9 @@ const Create = () => {
     };
 	
 	const needToMintToast = async () => {
-        toast.error("Please mint your" + selectedToken + "before creating...", {
+        toast.error("You need to mint some" + selectedToken + "...", {
             position: "top-right",
-            autoClose: 6500,
+            autoClose: 8500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -127,7 +127,7 @@ const Create = () => {
 
             startMintToast();
       
-           console.log("Getting ready to mint your cactus...")
+           console.log("Getting ready to mint your tokens...")
             await txn.wait();
 
             successMintToast();
@@ -217,7 +217,7 @@ const Create = () => {
             const signer = provider.getSigner();
             const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
 
-            console.log("Checking contract data for the number of CactuStipends...")
+            console.log("Checking Truflation for the current inflation data...")
             let latestInflation = await connectedContract.usdInflationPercent();
 
             setLatestInflation('' + (1 + (latestInflation / 10**18)).toFixed(3));
@@ -225,7 +225,7 @@ const Create = () => {
            console.log("Current inflation coming in at " + usdInflation)
       
         } else {
-            console.log("Something's f*ed up...go fix it...");
+            console.log("Looks like something's broken...");
         }
     
         } catch (error) {
