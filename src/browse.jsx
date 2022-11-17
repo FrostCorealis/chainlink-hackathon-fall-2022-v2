@@ -19,7 +19,7 @@ const Browse = () => {
     const [ joinNumber, setJoinNumber] = useState ('');
 
     const showToast = async () => {
-        toast(`Adding you to the list for CactuStipend {' '} ${joinNumber}`, {
+        toast("Adding you to the CactuStipend list!", {
             position: "top-right",
             autoClose: 9500,
             hideProgressBar: false,
