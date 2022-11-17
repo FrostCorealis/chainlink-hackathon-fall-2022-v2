@@ -114,9 +114,9 @@ export default class App extends React.Component {
           >
          {" "}click here to obtain verification credentials
           </a>.</h2> 
-          <h2>2) Scan the QR code below to gain access to the ZKP Stipend.
+          <h2>Next, scan the QR code below to gain access to the ZKP Stipend.
         </h2>
-        <h2>3) Navigate back to Browse to join.
+        <h2>After that, mavigate back to Browse to join the ZKP Stipend.
         </h2>
 
         <div style={styles.qrcontainer}>
