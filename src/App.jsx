@@ -14,7 +14,7 @@ import polygonLogo from './assets/polygonlogo.png';
 import ethLogo from './assets/ethlogo.png';
 
 
-const CONTRACT_ADDRESS = "0x105F714a80fB87F21de05428D399F6Aa550199e4";
+const CONTRACT_ADDRESS = "0xB576a883179d6A9018233e5833D9db8F726A764b";
 
 
   const App = () => {
