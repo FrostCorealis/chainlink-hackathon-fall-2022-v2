@@ -106,18 +106,18 @@ export default class App extends React.Component {
         <img src={polygonLogo} className="poly-logo" alt="logo" />
         </div>
   
-        <h2>
-          1) First, {" "}
+        <h2><ol>
+          <li>First, {" "}
           <a
             href="https://platform-test.polygonid.com/claim-link/f4c0d699-ddf6-44bd-807f-30ae81962039"
             target="_blank"
           >
          {" "}click here to obtain verification credentials
-          </a>.</h2> 
-          <h2>Next, scan the QR code below to gain access to the ZKP Stipend.
-        </h2>
-        <h2>After that, mavigate back to Browse to join the ZKP Stipend.
-        </h2>
+          </a>.</li> 
+          <li>Scan the QR code below to gain access to the ZKP Stipend.
+        </li>
+        <li>Navigate back to Browse to join the ZKP Stipend.</li>
+        </ol></h2>
 
         <div style={styles.qrcontainer}>
             <div style={styles.qrbox}>
