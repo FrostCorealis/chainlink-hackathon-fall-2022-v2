@@ -53,6 +53,18 @@ const Browse = () => {
             progress: undefined,
             });
     };
+    
+        const needIDToast = async () => {
+        toast.warn("You need to verify your PolygonID.", {
+            position: "top-right",
+            autoClose: 5700,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    };
 
           
     
@@ -229,7 +241,12 @@ const Browse = () => {
           }
         } catch (error) {
               console.log(error)
+            if (joinNumber == 0) {
+            needIDToast();
+                }
+            else {
             alreadyJoinedToast();
+            }
            }
       };
 
