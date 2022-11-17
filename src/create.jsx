@@ -123,7 +123,7 @@ const Create = () => {
             const connectedContract = new ethers.Contract(selectedTokenAddress, testUSDAbi.abi, signer);
       
             console.log("Paying for gas...")
-            let txn = await connectedContract.Mint("10000000000000000000000");
+            let txn = await connectedContract.Mint("50000000000000000000000");
 
             startMintToast();
       
@@ -278,7 +278,7 @@ const Create = () => {
         <div>
             <h2>Mint & approve your {selectedToken}.</h2>
                 <button onClick={mintTestTokens} className="cta-button mint-claim-button">
-						🌵 Mint 10,000 {selectedToken} 🌵
+						🌵 Mint 50,000 {selectedToken} 🌵
 				</button>
                 <button onClick={approveTestTokens} className="cta-button mint-claim-button">
 						🌵 Approve {selectedToken} 🌵
