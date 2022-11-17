@@ -133,7 +133,7 @@ const Manage = () => {
 
 
     const renderStipends = () => {
-        if (stipendList.length > 0) {
+       
         console.log("WORK WORK");
         console.log("testing the state:", stipendList)
     
@@ -164,7 +164,7 @@ const Manage = () => {
                 })}
             </div>
         </div>);
-        }
+        
     };
 
 
