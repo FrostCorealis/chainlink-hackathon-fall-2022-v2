@@ -45,7 +45,7 @@ const Browse = () => {
     const alreadyJoinedToast = async () => {
         toast.warn("You already joined CactuStipend" + joinNumber, {
             position: "top-right",
-            autoClose: 7500,
+            autoClose: 5700,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
