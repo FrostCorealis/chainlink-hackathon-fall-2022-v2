@@ -201,12 +201,12 @@ const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
 
         <img src={chainlinkLogo} className="App-logo" alt="logo" />
         <p>
-         Powered by Chainlink & Truflation.
+         Powered by Chainlink & Truflation
         </p>
         <img src={chainlinkLogo} className="App-logo" alt="logo" />
         </div>
         <div className="bottom2">
-          <p> Built on Polygon by Cactoid & Frost.</p>
+          <p> Built on Polygon by Cactoid & Frost</p>
           <h5>Chainlink Hackathon Fall 2022</h5>
         </div>
 
