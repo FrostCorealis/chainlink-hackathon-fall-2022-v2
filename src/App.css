@@ -18,6 +18,22 @@
   }
 }
 
+.hr-green-line {
+  border: 3px solid rgb(9, 209, 9);
+  width: 65%;
+  margin: auto;
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.hr-green-line2 {
+  border: 3px solid rgb(9, 209, 9);
+  width: 35%;
+  margin: auto;
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
 /* bottom section on App.jsx */
 
 .bottom1 {
@@ -39,6 +55,7 @@
   color: white;
 }
 
+
 /* zkp page */
 
 .poly-logo {
@@ -55,7 +72,7 @@
 }
 
 
-/* stipends on the browse page */
+/* stipends on the browse & manage pages */
 
 .stipend-list {   /* was mint list */
   display: flex;
@@ -147,6 +164,9 @@
   box-shadow: 4px 7px 8px #738b73;
 }
 
+
+/* browse page - join stipends */
+
 .join-stipend-button {
   background: -webkit-linear-gradient(left, #f1db15, #00FF00);
   animation: gradient-animation 4s ease infinite;
@@ -199,20 +219,18 @@
 
 .formContainer {
   max-width: 650px;
-  min-height: 50vh;
+  min-height: 65vh;
   margin: auto;
   margin-top: 20px;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
-  font-size: calc(11 + 3vmin);
-
+  font-size: 19px;
   border-style: solid;
-  border-color: yellowgreen;
+  border-color: rgb(9, 209, 9);
   border-radius: 18px;
-  padding: 25px;
-  box-shadow: 5px 10px 9px rgb(9, 209, 9);
+  padding: 50px;
 }
 
 .radio-button-container {
@@ -221,6 +239,11 @@
   text-align:left;
   margin: auto;
   color: white;
+}
+
+.radio-button {
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 .h3-create {
@@ -262,10 +285,10 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   text-align: center;
 }
 
-.create {
+.create-button {
     position: relative;
     background: yellowgreen;
-    color: white;
+    color: black;
     text-transform: none;
     border: none;
     font-weight: 600;
@@ -280,9 +303,10 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     font-weight: 400;
     letter-spacing: 0.5rem;
     transition: 0.3s all;
+    box-shadow: 5px 5px 15px white;
   }
 
-  .create:hover {
+  .create-button:hover {
     background: rgb(9, 209, 9);
     text-decoration: none;
     color: white;
@@ -291,45 +315,6 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   }
 
 /* other stuff */
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.hr-green-line {
-  border: 3px solid rgb(9, 209, 9);
-  width: 65%;
-  margin: auto;
-  margin-top: 35px;
-  margin-bottom: 35px;
-}
-
-.menu-item {
-  color: white;
-  text-decoration: none;
-  font-size: calc(24px + 2vmin);
-}
-
-.item-text {
-  line-height: 3;
-}
-
-.bottom {
-  background-color: black;
-  min-height: 8vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  margin-top: 50px;
-}
-
 
 .container {
   background-color: black;
@@ -349,6 +334,17 @@ header{
   padding: 10px 10px 10px 10px;
 }
 
+p {
+  margin:0;
+}
+
+.welcome{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px; 
+}
+
 .title {
   text-align: center;
   font-size: 57px;
@@ -364,26 +360,14 @@ header{
   text-shadow: 2px 4px 5px rgb(9, 209, 9);
 }
 
-p {
-  margin:0;
-}
-
-.p-lil-button {
-  margin:0;
-}
-
-.p-lil-button:hover {
-  margin:0;
+.menu-item {
   color: white;
-  font-weight: bold;
-  text-shadow: 4px 7px 8px #738b73 ;
+  text-decoration: none;
+  font-size: calc(24px + 2vmin);
 }
 
-.welcome{
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 50px; 
+.item-text {
+  line-height: 3;
 }
 
 .logo{
@@ -416,7 +400,6 @@ p {
   box-shadow: 5px 10px 12px rgb(9, 209, 9);
 }
 
-
 .connect-wallet-container {
   display: flex;
   flex-direction: column;
@@ -427,28 +410,25 @@ p {
 
 .cta-button {
   height: 45px;
-  border: 0;
   width: auto;
   padding-left: 40px;
   padding-right: 40px;
-  border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  box-shadow: 5px 10px 9px rgb(9, 209, 9);
 }
 
 .mint-claim-button {
   background: -webkit-linear-gradient(left, #f1db15, #00FF00);
-  animation: gradient-animation 4s ease infinite;
-  font-size: 18px;
   background-size: 200% 200%;
+  animation: gradient-animation 4s ease infinite;
+  box-shadow: 5px 10px 9px rgb(9, 209, 9);
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
   margin: 20px 10px;
   border-radius: 16px;
   border-style: solid;
-  border-width: 1px;
+  border-width: 3px;
   border-color: white;
-  padding: 0px 2rem;
 }
 
 .mint-claim-button:hover {
@@ -466,6 +446,17 @@ p {
   width: 275px;
   font-size: 18px;
   cursor: pointer;
+}
+
+.p-lil-button {
+  margin:0;
+}
+
+.p-lil-button:hover {
+  margin:0;
+  color: white;
+  font-weight: bold;
+  text-shadow: 4px 7px 8px #738b73 ;
 }
 
 .connect-wallet-button {
@@ -494,19 +485,6 @@ p {
   text-shadow: 4px 7px 8px #738b73 ;
 }
 
-.mint-claim-button {
-  background: -webkit-linear-gradient(left, #f1db15, #00FF00);
-  animation: gradient-animation 4s ease infinite;
-  font-size: 18px;
-  background-size: 200% 200%;
-  margin: 20px 10px;
-  border-radius: 16px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: white;
-  padding: 0px 2rem;
-}
-
 .network-button {
   background: -webkit-linear-gradient(left, rgb(184, 193, 187), greenyellow);
   font-size: 18px;
@@ -520,30 +498,6 @@ p {
   padding: 20px;
   color: black;
 }
-
-
-
-
-.footer-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 30px;
-  background-color: black;
-}
-
-.twitter-logo {
-  width: 35px;
-  height: 35px;
-}
-
-.footer-text {
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-
 
 
 a:link {
@@ -566,7 +520,18 @@ a:active {
   text-decoration: none;
 }
 
-/* KeyFrames */
+
+/* keyFrames */
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @-webkit-keyframes gradient-animation {
   0% {
     background-position: 0% 50%;
