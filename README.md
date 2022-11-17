@@ -1,12 +1,12 @@
 # chainlink-hackathon-fall-2022-v2
 
-## 🌵 We are powered by Chainlink & Truflation:  Chainlink Automation + Chainlink Price Feeds + Truflation Data Feeds 🌵
+### 🌵 We are powered by Chainlink & Truflation:  Chainlink Automation + Chainlink Price Feeds + Truflation Data Feeds 🌵
 
 In addition, we've incorporated **Polygon ID**.  Our contracts reside on Polygon's **Mumbai Testnet**. 
 
 
 
-##**CONTRACT ADDRESSES:**
+## **CONTRACT ADDRESSES:**
 
   **CactuStipendv2:** 0xB576a883179d6A9018233e5833D9db8F726A764b
 
@@ -22,6 +22,6 @@ In addition, we've incorporated **Polygon ID**.  Our contracts reside on Polygon
 
 
 
-###**dApp location:**  https://hackacactus.vercel.app/
+### **dApp location:**  https://hackacactus.vercel.app/
 
-###**Chainlink Automation:**
+### **Chainlink Automation:**
