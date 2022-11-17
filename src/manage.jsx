@@ -274,12 +274,12 @@ const Manage = () => {
     
             console.log(`Claiming your balance from your CactuStipend ${claimNumber}...`)
             await txn.wait();
-		    
-		    successClaimToast();
           
             console.log(`You've got funds! Check your wallet. 💵`);
 
             window.location.reload()
+
+		successClaimToast();
 
         }
         } else {
