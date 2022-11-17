@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
 import { ethers } from 'ethers';
 import contractAbi from './utils/contractAbi.json';
@@ -11,15 +14,38 @@ import polygonLogo from './assets/polygonlogo.png';
 import ethLogo from './assets/ethlogo.png';
 
 
-const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
+const CONTRACT_ADDRESS = "0x105F714a80fB87F21de05428D399F6Aa550199e4";
 
 
   const App = () => {
     const [network, setNetwork] = useState('');
     const [currentAccount, setCurrentAccount] = useState('');
-  
-    
-    let balance = 107;
+
+
+    const showToast = async () => {
+      toast("Getting you on the list for your CactuStipend...", {
+          position: "top-left",
+          autoClose: 7000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      };
+
+    const successToast = async () => {
+        toast("Your're in!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+
+    };
   
   
     const switchNetwork = async () => {
@@ -170,6 +196,21 @@ const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
 
   return (
     <div className="App">
+
+      <ToastContainer
+            position="top-left"
+            autoClose={8000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
+
+
       <div className="container">
 
         <div className="header-container">
@@ -189,7 +230,7 @@ const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
 
         <div className="welcome">
           <p className="title">🌵 CactuStipend 🌵</p>
-          <p className="subtitle">A unique stipend adjusted for inflation.</p>
+          <p className="subtitle">Automated stipends adjusted for inflation.</p>
         </div>
 
         {!currentAccount && renderNotConnectedContainer()}
@@ -201,12 +242,12 @@ const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
 
         <img src={chainlinkLogo} className="App-logo" alt="logo" />
         <p>
-         Powered by Chainlink & Truflation
+         Powered by Chainlink & Truflation.
         </p>
         <img src={chainlinkLogo} className="App-logo" alt="logo" />
         </div>
         <div className="bottom2">
-          <p> Built on Polygon by Cactoid & Frost</p>
+          <p> Built on Polygon by Cactoid & Frost.</p>
           <h5>Chainlink Hackathon Fall 2022</h5>
         </div>
 
@@ -217,4 +258,3 @@ const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
 }
 
 export default App;
-
