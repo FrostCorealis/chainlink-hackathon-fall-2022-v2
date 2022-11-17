@@ -255,10 +255,12 @@ const Create = () => {
 
         <div>
             <h1>Here's where you can build your own stipend.</h1>
+            <h2>After you select your token, you will mint & approve it.</h2>
         </div>
 
         <div>
-            <h2>You'll need to mint & approve {selectedToken}.</h2>
+            <h2>Mint & approve your {selectedToken}.</h2>
+
                 <button onClick={mintTestTokens} className="cta-button mint-claim-button">
 						🌵 Mint 10,000 {selectedToken} 🌵
 				</button>
@@ -287,16 +289,16 @@ const Create = () => {
 
             <h3 className="h3-create">Which token will you use to build your stipend?</h3>
 
-            <div className="radio-button-container"> 
+            <div className="radio-button-container">
 
     <Form.Group inline>
-        <Form.Radio label="testLINK" checked={selectedToken === 'testLINK'} value="testLINK" onClick={() => setToken('testLINK') & setTokenAddress(testLINK_Address)} />
-        <Form.Radio label="testMATIC" checked={selectedToken === 'testMATIC'} value="testMATIC" onClick={() => setToken('testMATIC') & setTokenAddress(testMATIC_Address)} />
-        <Form.Radio label="testETH" checked={selectedToken === 'testETH'} value="testETH" onClick={() => setToken('testETH') & setTokenAddress(testETH_Address)} />
-        <Form.Radio label="testUSD" checked={selectedToken === 'testUSD'} value="testUSD" onClick={() => setToken('testUSD') & setTokenAddress(testUSD_Address)} />
+        <Form.Radio className="radio-button" label=" testLINK" checked={selectedToken === 'testLINK'} value="testLINK" onClick={() => setToken('testLINK') & setTokenAddress(testLINK_Address)} />
+        <Form.Radio className="radio-button" label=" testMATIC" checked={selectedToken === 'testMATIC'} value="testMATIC" onClick={() => setToken('testMATIC') & setTokenAddress(testMATIC_Address)} />
+        <Form.Radio className="radio-button" label=" testETH" checked={selectedToken === 'testETH'} value="testETH" onClick={() => setToken('testETH') & setTokenAddress(testETH_Address)} />
+        <Form.Radio className="radio-button" label=" testUSD" checked={selectedToken === 'testUSD'} value="testUSD" onClick={() => setToken('testUSD') & setTokenAddress(testUSD_Address)} />
       </Form.Group>
 
-            </div>
+            </div> 
 
      
 
