@@ -8,8 +8,8 @@ import contractAbi from './utils/contractAbi.json';
 import ZKPcontractAbi from './utils/ZKPcontractAbi.json';
 import './App.css';
 
-const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
-const ZKPPOLYGONID_ADDRESS = "0x3A7772B5e1407524B6D57aaDAD226B4Ed56abFA7"; 
+const CONTRACT_ADDRESS = "0x105F714a80fB87F21de05428D399F6Aa550199e4";
+const ZKPPOLYGONID_ADDRESS = "0xa3B8F80d7f894ffEB678eD9E7AC8C7178Dae8fCF"; //placeholder
 
 const Manage = () => {
 
@@ -20,22 +20,23 @@ const Manage = () => {
     const [stipendList, setStipendList] = useState([]);
     const [zkpStatus, setZKPStatus] = useState([]);
     const [ claimNumber, setClaimNumber] = useState ('');
-	
-	
-    const startClaimToast = async () => {
-         toast("Claiming your CactuStipend balance...", {
-         position: "top-right",
-         autoClose: 9500,
-         hideProgressBar: false,
-         closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
-         progress: undefined,
+    const [inflation, setInflation] = useState('');
+
+
+    const showToast = async () => {
+        toast("Claiming your CactuStipend...", {
+            position: "top-right",
+            autoClose: 7000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
             });
-    };
+        };
 
-    const successClaimToast = async () => {
-        toast("Done! Your balance includes the Truflation adjustment to match the current rate of inflation.", {
+    const successToast = async () => {
+        toast("Claimed your CactuStipend!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -44,34 +45,123 @@ const Manage = () => {
         draggable: true,
         progress: undefined,
         });
-    };	
-	
-    const startZKPClaimToast = async () => {
-         toast("Claiming your Truflation-adjusted balance from your ZPK CactuStipend ...", {
-         position: "top-right",
-         autoClose: 9500,
-         hideProgressBar: false,
-         closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
-         progress: undefined,
-         });
-    };
 
-    const successZKPClaimToast = async () => {
-        toast("Done! You've got ZPK Dubloons!  Check your wallet. 😎", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-    };	
-	
+    };
 
       
+/*
+    const getBalance = async () => {
+  
+        try {
+          const { ethereum } = window;
+          
+      
+        if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, provider);
+
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+			const account = accounts[0];
+			console.log('Found an authorized CACTUS account:', account);
+
+    
+            console.log("Checking contract data for the balance of your CactuStipend...")
+            const pendingBalance = await connectedContract.userPendingBalance(1, account);
+        
+            console.log("Waiting for the data to arrive...")
+
+            const pendingBalanceMod = (pendingBalance / (10**18))
+
+            setCurrentBalance(currentBalance + pendingBalanceMod);
+             
+            console.log(`Your current balance is ${pendingBalance}`);
+
+      
+        } else {
+            console.log("Something's broken...go fix it...");
+        }
+        } catch (error) {
+          console.log(error)
+      } 
+      };
+      
+    
+/*
+    const getYourStipend = async () => {
+  
+    	try {
+      		const { ethereum } = window;
+
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+              if (accounts.length !== 0) {
+                  const account = accounts[0];
+                  console.log('Found an authorized account:', account);
+                  setCurrentAccount(account);
+              } else {
+                  console.log('No authorized account found');
+            }
+  
+      	if (ethereum) {
+        	const provider = new ethers.providers.Web3Provider(ethereum);
+        	const signer = provider.getSigner();
+        	const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
+  
+        	console.log("Paying for gas...")
+        	let txn = await connectedContract.userClaimStipend(1, signer.getAddress());
+  
+        	console.log("Your current cactus balance is ", currentBalance)
+        	await txn.wait();
+          
+        	console.log(`Done!  See transaction: https://mumbai.polygonscan.com/tx/${txn.hash}`);
+  
+      	} else {
+        	console.log("Ethereum object doesn't exist!");
+      	}
+    	} catch (error) {
+      		console.log(error)
+   		}
+  	};
+*/
+
+/*
+      
+    
+    const numberOfStipends = async () => {
+  
+        try {
+          const { ethereum } = window;
+      
+        if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const signer = provider.getSigner();
+            const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
+      
+            console.log("Checking contract data for the number of CactuStipends...")
+            let stipendIterator = await connectedContract.getUserJoinedStipends(signer.getAddress());
+      
+           console.log("Waiting for the data to arrive...")
+            //await txn.wait();
+
+            console.log(`There are currently ${stipendIterator -= 1} stipends.`);
+            console.log(stipendIterator -= 1) ;
+
+
+            setTotalStipends(stipendIterator -= 1) ;
+                      
+            console.log(`There are currently ${totalStipends} and also ${stipendIterator}`);
+      
+        } else {
+            console.log("Something's broken...go fix it...");
+        }
+    
+        } catch (error) {
+          console.log(error)
+        }
+    }; 
+
+*/
 
     const fetchStipendStats = async () => {
   
@@ -99,8 +189,8 @@ const Manage = () => {
                         stipendId: ('' + stipend[2]),
                         stipendName: stipend[0],
                         stipendToken: stipend[1],
-                        pendingBalance: ('' + (stipend[5] / 10**18).toFixed(2)),
-                        paymentAmount: ('' + stipend[3]),
+                        pendingBalance: ('' + (stipend[5] / 10**18).toFixed(3)),
+                        paymentAmount: ('' + (stipend[3])), //* inflation).toFixed(2)),
                         paymentInterval: ('' + stipend[4]),
                     };
                 }));
@@ -140,7 +230,7 @@ const Manage = () => {
                         stipendId: ('' + 0),
                         stipendName: "ZKP Stipend",
                         stipendToken: stipend[1],
-                        pendingBalance: ('' + (stipend[5] / 10**18).toFixed(2)),
+                        pendingBalance: ('' + (stipend[5] / 10**18).toFixed(3)),
                         paymentAmount: ('' + stipend[3]),
                         paymentInterval: ('' + stipend[4]),
                     };
@@ -176,8 +266,8 @@ const Manage = () => {
                                 <p className="stipend-name">{' '}{stipend.stipendName}{' '}</p>
                             </div>      
                                 <p>Pending Balance:{' '}{stipend.pendingBalance}{' '}{stipend.stipendToken}{' '}</p>
-                                <p>Pays ${stipend.paymentAmount} of {stipend.stipendToken} every {stipend.paymentInterval} days.</p>
-                                
+                                <p>Pays ${stipend.paymentAmount} of {stipend.stipendToken} every {stipend.paymentInterval} hours.</p>
+                                <p>Modifier: x{inflation}</p>
                                 <div className="id-box">      
                                     <p className="id-name">🌵 Stipend ID:{' '}{stipend.stipendId}{' '}🌵</p>
                                 </div>
@@ -195,7 +285,7 @@ const Manage = () => {
     const renderZKPStipend = () => {
         if (zkpStatus.length > 0) {
         console.log("GO ZPK GO ZPK GO ZPK");
-		
+        //console.log ({stipendsCreated}, "test");
         console.log("Your ZPK status is:", zkpStatus)
     
         return (
@@ -250,36 +340,37 @@ const Manage = () => {
                 
                 console.log("Paying for gas...")
                 let txn = await connectedContract.userClaimStipend(1, signer.getAddress());
-		    
-		    startZKPClaimToast();
+
+                showToast();
         
                 console.log(`Claiming your balance from your ZPK CactuStipend ${claimNumber}...`)
                 await txn.wait();
-		    
-		    successZKPClaimToast();
               
+                //console.log(`You're in!  See transaction: https://mumbai.polygonscan.com/tx/${txn.hash}`);
                 console.log(`You've got ZPK Dubloons!  Check your wallet. 😎`);
+
+                successToast();
+
                 }
-		  
             else {
-		    
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
             const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
     
             console.log("Paying for gas...")
             let txn = await connectedContract.userClaimStipend(claimNumber, signer.getAddress());
-		    
-		    startClaimToast();
-    
+            
+            showToast();
+
             console.log(`Claiming your balance from your CactuStipend ${claimNumber}...`)
             await txn.wait();
           
+            //console.log(`You're in!  See transaction: https://mumbai.polygonscan.com/tx/${txn.hash}`);
             console.log(`You've got funds! Check your wallet. 💵`);
 
-            window.location.reload()
-
-		successClaimToast();
+            successToast();
+            
+            fetchStipendStats();
 
         }
         } else {
@@ -316,6 +407,36 @@ const Manage = () => {
     
             </div>
         );
+
+        const currentInflation = async () => {
+  
+            try {
+              const { ethereum } = window;
+          
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
+        
+                console.log("Checking contract data for the number of CactuStipends...")
+                let newInflation = await connectedContract.usdInflationPercent();
+        
+                setInflation('' + (1 + (((newInflation / 10**18)))).toFixed(3));
+          
+               console.log("Current inflation coming in at " + inflation)
+          
+            } else {
+                console.log("Something's f*ed up...go fix it...");
+            }
+        
+            } catch (error) {
+              console.log(error)
+            }
+        };
+    
+        useEffect(() => {
+            currentInflation();
+        }, [])
         
 
     useEffect(() => {
@@ -323,17 +444,28 @@ const Manage = () => {
     }, [])
 
 
+
     useEffect(() => {
         fetchStipendStats();
-    }, [])    
+    }, [])
+    
+ 
+/*
+    useEffect(() => {
+        numberOfStipends();
+    }, [])
 
+    useEffect(() => {
+        getBalance();
+      }, [])
+*/
 
     return (
         
         <main className="App">
-	    
-	<ToastContainer
-            position="top-right"
+
+        <ToastContainer
+            position="top-left"
             autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
@@ -343,12 +475,12 @@ const Manage = () => {
             draggable
             pauseOnHover
             theme="dark"
-        />
+        />   
 
         <header>
             <Link to="/" className="home-link">
                 <div>
-                    <h2>🌵 CactuStipend 🌵</h2>
+                    <h2>← 🌵 CactuStipend 🌵</h2>
                 </div>
             </Link>
         </header>
