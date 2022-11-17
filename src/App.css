@@ -112,7 +112,7 @@
 }
 
 .zkp-id-box {
-  background: -webkit-linear-gradient(left, #c0a3f2, #d9c7f7);
+  background: -webkit-linear-gradient(left, #c0a3f2, #524fe7);
   width: 75%;
   margin-top: 13px;
   margin-bottom: 13px; 
@@ -146,9 +146,6 @@
   border-color: white;
   box-shadow: 4px 7px 8px #738b73;
 }
-
-
-
 
 .join-stipend-button {
   background: -webkit-linear-gradient(left, #f1db15, #00FF00);
@@ -198,7 +195,7 @@
 }
 
 
-/* form styles */
+/* create page form styles */
 
 .formContainer {
   max-width: 650px;
@@ -216,6 +213,14 @@
   border-radius: 18px;
   padding: 25px;
   box-shadow: 5px 10px 9px rgb(9, 209, 9);
+}
+
+.token-amount-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(12px + 2vmin);
+  color: white;
 }
 
 
