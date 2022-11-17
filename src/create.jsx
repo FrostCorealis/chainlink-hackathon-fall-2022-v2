@@ -155,7 +155,7 @@ const Create = () => {
             const connectedContract = new ethers.Contract(selectedTokenAddress, testUSDAbi.abi, signer);
       
             console.log("Paying for gas...")
-            let txn = await connectedContract.approve(CONTRACT_ADDRESS, "1000000000000000000000000000000");
+            let txn = await connectedContract.approve(CONTRACT_ADDRESS, ethers.constants.MaxUint256);
 
             startApproveToast();
       
