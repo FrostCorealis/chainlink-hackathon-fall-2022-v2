@@ -334,7 +334,6 @@ const Create = () => {
 						placeholder={selectedToken}
 						onChange={e => setInitialFunds(e.target.value)}
 					/> 
-                    {selectedToken}
                 
             </form>
 
