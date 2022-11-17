@@ -330,6 +330,7 @@ const Create = () => {
             <h3 className="h3-create">How many {selectedToken} tokens will you provide for initial funding?</h3>
                 
                 
+                   <div className="token-amount-container">
                     <input
 						type="number"
                         className="number-input"
@@ -338,6 +339,7 @@ const Create = () => {
 						onChange={e => setInitialFunds(e.target.value)}
 					/> 
                     {selectedToken}
+                 </div>
                     
                 
             </form>
