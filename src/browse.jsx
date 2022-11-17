@@ -298,8 +298,8 @@ const Browse = () => {
 
             <div>
                 <h1 className="subtitle">Here's where you can see all the available stipends and select one to join.</h1>
-                <h2>Make your selection, enter the stipend ID, and then click join.</h2>
-                <h3>After you join a stipend, visit the Manage page to check your balance.</h3>
+                <h2 className="h3-create" >Make your selection, enter the stipend ID, and then click join.</h2>
+                <h3 className="h3-create">After you join a stipend, visit the Manage page to check your balance.</h3>
             </div>
 
         <div>
