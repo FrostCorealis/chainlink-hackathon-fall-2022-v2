@@ -40,7 +40,18 @@ const Browse = () => {
         draggable: true,
         progress: undefined,
         });
-
+    };
+    
+    const alreadyJoinedToast = async () => {
+        toast.warn("You already joined CactuStipend" + joinNumber, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
     };
 
           
@@ -218,6 +229,7 @@ const Browse = () => {
           }
         } catch (error) {
               console.log(error)
+            alreadyJoinedToast();
            }
       };
 
