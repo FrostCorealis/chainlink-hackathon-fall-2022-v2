@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { ethers } from 'ethers';
 import contractAbi from './utils/contractAbi.json';
 import ZKPcontractAbi from './utils/ZKPcontractAbi.json';
@@ -14,6 +17,55 @@ const Browse = () => {
     const [totalStipends, setTotalStipends] = useState(0);
     const [stipendList, setStipendList] = useState([]);
     const [ joinNumber, setJoinNumber] = useState ('');
+    
+    
+    const startJoinToast = async () => {
+        toast("Getting you on the list for your CactuStipend...", {
+            position: "top-right",
+            autoClose: 9500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        };
+
+    const successJoinToast = async () => {
+        toast("You’re in!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    };
+    
+    const startJoinZKPToast = async () => {
+        toast("Getting you on the list for the special ZKP CactuStipend...", {
+            position: "top-right",
+            autoClose: 9500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        };
+
+    const successJoinZKPToast = async () => {
+        toast("YCongrats!  Your Polygon ID credentials got you in!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    };
        
     
     const numberOfStipends = async () => {
@@ -151,11 +203,15 @@ const Browse = () => {
             
             console.log("Paying for gas...")
             let txn = await connectedContract.userJoinStipend(1, signer.getAddress());
+             
+                startJoinZKPToast();
     
-            console.log(`Getting you on the CactuStipend list for CactuStipend ${joinNumber}...`)
+            console.log(`Getting you on the list for the special ZKP CactuStipend ${joinNumber}...`)
             await txn.wait();
+                
+                successJoinToast();
           
-            console.log(`You're in!`);
+            console.log(`Congrats!  Your Polygon ID credentials got you in!`);
             }
 
             else {
@@ -165,9 +221,13 @@ const Browse = () => {
     
             console.log("Paying for gas...")
             let txn = await connectedContract.userJoinStipend(joinNumber, signer.getAddress());
+                
+                startJoinToast();
     
             console.log(`Getting you on the CactuStipend list for CactuStipend ${joinNumber}...`)
             await txn.wait();
+                
+                successJoinToast();
           
             console.log(`You're in!`);
             }
@@ -221,6 +281,19 @@ const Browse = () => {
     return (
         
         <main className="App">
+        
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+        />
 
             <header>
                 <Link to="/" className="home-link">
