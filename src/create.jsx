@@ -99,7 +99,7 @@ const Create = () => {
     };
 	
 	const oopsToast = async () => {
-        toast.warn("Make sure you approve your " + selectedToken + " & mint enough for your CactuStipend.", {
+        toast.warn("Please approve your token and mint enough to fund your CactuStipend.", {
             position: "top-right",
             autoClose: 8500,
             hideProgressBar: false,
