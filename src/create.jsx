@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ethers } from 'ethers';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
+import { Form } from 'semantic-ui-react';
 import "react-toastify/dist/ReactToastify.css";
 import './App.css';
 import contractAbi from './utils/contractAbi.json';
 import testUSDAbi from './utils/testUSDAbi.json';
 
-
-const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
+const CONTRACT_ADDRESS = "0x105F714a80fB87F21de05428D399F6Aa550199e4";
+const testLINK_Address = "0x1e4CF3c1eC9c799bc51101c87B145eD2dc1A0307";
+const testMATIC_Address = "0x81c98576E95AF3576Ab4ccd25Bc52b5634769cE9";
+const testETH_Address = "0xeD8d5e4B82d4487e3B0dF0997BD6D312A4Bfc8BC";
 const testUSD_Address = "0x2C3126191A8eA852f91520D90349928fB607a49d";
 
 const Create = () => {
@@ -18,9 +21,12 @@ const Create = () => {
     const [frequency, setFrequency] = useState();
     const [stipendAmount, setStipendAmount] = useState();
     const [initialFunds, setInitialFunds] = useState();
+    const [selectedToken, setToken] = useState("testLINK");
+    const [selectedTokenAddress, setTokenAddress] = useState(testLINK_Address);
+    const [usdInflation, setLatestInflation] = useState('');
 
     const startMintToast = async () => {
-        toast("Minting your TestUSD...", {
+        toast("Minting your " + selectedToken + "...", {
             position: "top-right",
             autoClose: 9500,
             hideProgressBar: false,
@@ -32,7 +38,7 @@ const Create = () => {
         };
 
     const successMintToast = async () => {
-        toast("Done!", {
+        toast("Done minting!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -41,7 +47,6 @@ const Create = () => {
         draggable: true,
         progress: undefined,
         });
-
     };
 
     const startCreateToast = async () => {
@@ -70,7 +75,7 @@ const Create = () => {
     };
 
     const startApproveToast = async () => {
-        toast("Processing your approval to spend your TestUSD...", {
+        toast("Processing your approval to spend your " + selectedToken + "...", {
             position: "top-right",
             autoClose: 9500,
             hideProgressBar: false,
@@ -82,7 +87,7 @@ const Create = () => {
         };
 
     const successApproveToast = async () => {
-        toast("Your TestUSD is approved & you can now create a CactuStipend!", {
+        toast("Your tokens have been approved & you can now create a CactuStipend!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -95,7 +100,7 @@ const Create = () => {
     };
 
 
-    const mintTestUSD = async () => {
+    const mintTestTokens = async () => {
   
         try {
           const { ethereum } = window;
@@ -104,7 +109,7 @@ const Create = () => {
         if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
-            const connectedContract = new ethers.Contract(testUSD_Address, testUSDAbi.abi, signer);
+            const connectedContract = new ethers.Contract(selectedTokenAddress, testUSDAbi.abi, signer);
       
             console.log("Paying for gas...")
             let txn = await connectedContract.Mint("10000000000000000000000");
@@ -127,7 +132,7 @@ const Create = () => {
       }; 
 
 
-      const approveTestUSD = async () => {
+      const approveTestTokens = async () => {
   
         try {
           const { ethereum } = window;
@@ -136,7 +141,7 @@ const Create = () => {
         if (ethereum) {
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
-            const connectedContract = new ethers.Contract(testUSD_Address, testUSDAbi.abi, signer);
+            const connectedContract = new ethers.Contract(selectedTokenAddress, testUSDAbi.abi, signer);
       
             console.log("Paying for gas...")
             let txn = await connectedContract.approve(CONTRACT_ADDRESS, "1000000000000000000000000000000");
@@ -171,7 +176,7 @@ const Create = () => {
         	const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
         	console.log("Paying for gas...")
 
-            let txn = await connectedContract.createStipend(stipendName, signer.getAddress(), testUSD_Address, stipendAmount, frequency, initialFunds);
+            let txn = await connectedContract.createStipend(stipendName, signer.getAddress(), selectedTokenAddress, stipendAmount, frequency, initialFunds);
 
             startCreateToast();
 
@@ -191,6 +196,36 @@ const Create = () => {
    		}
   	};
 
+      const currentInflationPercent = async () => {
+  
+        try {
+          const { ethereum } = window;
+      
+        if (ethereum) {
+            const provider = new ethers.providers.Web3Provider(ethereum);
+            const signer = provider.getSigner();
+            const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
+
+            console.log("Checking contract data for the number of CactuStipends...")
+            let latestInflation = await connectedContract.usdInflationPercent();
+
+            setLatestInflation('' + (1 + (latestInflation / 10**18)).toFixed(3));
+      
+           console.log("Current inflation coming in at " + usdInflation)
+      
+        } else {
+            console.log("Something's f*ed up...go fix it...");
+        }
+    
+        } catch (error) {
+          console.log(error)
+        }
+    };
+    
+    useEffect(() => {
+        currentInflationPercent();
+    }, [])   
+
 
 
     return (
@@ -198,7 +233,7 @@ const Create = () => {
         <main className="App">
 
         <ToastContainer
-            position="top-right"
+            position="top-left"
             autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
@@ -213,22 +248,25 @@ const Create = () => {
         <header>
             <Link to="/" className="home-link">
                 <div>
-                    <h2>🌵 CactuStipend 🌵</h2>
+                    <h2>← 🌵 CactuStipend 🌵</h2>
                 </div>
             </Link>
         </header>
 
         <div>
             <h1>Here's where you can build your own stipend.</h1>
-            <h2>First, you'll need to mint & approve TestUSD.</h2>
-                <button onClick={mintTestUSD} className="cta-button mint-claim-button">
-						🌵 Mint 10,000 TestUSD 🌵
-				</button>
-                <button onClick={approveTestUSD} className="cta-button mint-claim-button">
-						🌵 Approve TestUSD 🌵
-				</button>
         </div>
 
+        <div>
+            <h2>You'll need to mint & approve {selectedToken}.</h2>
+                <button onClick={mintTestTokens} className="cta-button mint-claim-button">
+						🌵 Mint 10,000 {selectedToken} 🌵
+				</button>
+                <button onClick={approveTestTokens} className="cta-button mint-claim-button">
+						🌵 Approve {selectedToken} 🌵
+				</button>
+            </div>
+        
         
         <div className="formContainer">
 
@@ -243,11 +281,29 @@ const Create = () => {
 						value={stipendName}
 						placeholder="Stipend Name"
 						onChange={e => setStipendName(e.target.value)}
+                        
 					/>
+
+            <div className="radio-button-container">  
+                  
+
+            <h3 className="h3-create">Which token will you use to build your stipend?</h3>
+
+{/* OPTION ONE */}
+    <Form.Group inline>
+        <Form.Radio label="testLINK" checked={selectedToken === 'testLINK'} value="testLINK" onClick={() => setToken('testLINK') & setTokenAddress(testLINK_Address)} />
+        <Form.Radio label="testMATIC" checked={selectedToken === 'testMATIC'} value="testMATIC" onClick={() => setToken('testMATIC') & setTokenAddress(testMATIC_Address)} />
+        <Form.Radio label="testETH" checked={selectedToken === 'testETH'} value="testETH" onClick={() => setToken('testETH') & setTokenAddress(testETH_Address)} />
+        <Form.Radio label="testUSD" checked={selectedToken === 'testUSD'} value="testUSD" onClick={() => setToken('testUSD') & setTokenAddress(testUSD_Address)} />
+      </Form.Group>
+
+            </div>
+
+     
 
 
             <h3 className="h3-create">How often will your stipend be distributed?</h3>
-            <h4>This stipend will be distributed every ____ day(s).</h4>
+            <h4>This stipend will be distributed every ____ hour(s).</h4>
             
                 <input
 						type="number"
@@ -257,28 +313,33 @@ const Create = () => {
 						onChange={e => setFrequency(e.target.value)}
 					/>
 
-
-            <h3 className="h3-create">How many tokens will be distributed each time?</h3>
+            
+            <h3 className="h3-create">How much, in US dollars, will be distributed each time?</h3>
+            <h4>This amount will be modified by the Truflation USD YoY Inflation Oracle.</h4>
+            <h4>Current modifier: x{usdInflation}</h4>
                 
                 <input
 						type="number"
                         className="number-input"
 						value={stipendAmount}
-						placeholder="Distribution Amount"
+						placeholder="$ Amount"
 						onChange={e => setStipendAmount(e.target.value)}
 					/>
 
 
-            <h3 className="h3-create">How much are you providing for the inital funding for this stipend?</h3>
+            <h3 className="h3-create">How many {selectedToken} tokens will you provide for initial funding?</h3>
                 
-                <input
+                
+                    <input
 						type="number"
                         className="number-input"
 						value={initialFunds}
-						placeholder="Initial Funding"
+						placeholder="Initial Funding" 
 						onChange={e => setInitialFunds(e.target.value)}
-					/>
-   
+					/> 
+                    {selectedToken}
+                    
+                
             </form>
 
             <button className='create' onClick={sendDataToContract}>
