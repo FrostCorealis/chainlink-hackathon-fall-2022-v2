@@ -21,7 +21,7 @@ const styles = {
   title: {
     color: "#8247E5",
     textStyle: "bold",
-    textShadow: "1px 1px 2px #9ACD32, 2px 2px 25px white, 3px 3px 5px #d9c7f7",
+    textShadow: "1px 1px 2px #9ACD32, 3px 3px 8px white, 0px 0px 25px #d9c7f7",
     fontSize: "35px",
   },
   titleContainer: {
