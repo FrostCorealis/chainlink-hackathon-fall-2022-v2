@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { ethers } from 'ethers';
 import contractAbi from './utils/contractAbi.json';
 import ZKPcontractAbi from './utils/ZKPcontractAbi.json';
@@ -17,6 +20,56 @@ const Manage = () => {
     const [stipendList, setStipendList] = useState([]);
     const [zkpStatus, setZKPStatus] = useState([]);
     const [ claimNumber, setClaimNumber] = useState ('');
+	
+	
+    const startClaimToast = async () => {
+         toast("Claiming your CactuStipend balance...", {
+         position: "top-right",
+         autoClose: 9500,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+            });
+    };
+
+    const successClaimToast = async () => {
+        toast("Done! Your balance includes the Truflation adjustment to match the current rate of inflation.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    };	
+	
+    const startZKPClaimToast = async () => {
+         toast("Claiming your Truflation-adjusted balance from your ZPK CactuStipend ...", {
+         position: "top-right",
+         autoClose: 9500,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         });
+    };
+
+    const successZKPClaimToast = async () => {
+        toast("Done! You've got ZPK Dubloons!  Check your wallet. 😎", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    };	
+	
 
       
 
@@ -197,24 +250,33 @@ const Manage = () => {
                 
                 console.log("Paying for gas...")
                 let txn = await connectedContract.userClaimStipend(1, signer.getAddress());
+		    
+		    startZKPClaimToast();
         
                 console.log(`Claiming your balance from your ZPK CactuStipend ${claimNumber}...`)
                 await txn.wait();
+		    
+		    successZKPClaimToast();
               
                 console.log(`You've got ZPK Dubloons!  Check your wallet. 😎`);
                 }
+		  
             else {
+		    
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
             const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
     
             console.log("Paying for gas...")
             let txn = await connectedContract.userClaimStipend(claimNumber, signer.getAddress());
+		    
+		    startClaimToast();
     
             console.log(`Claiming your balance from your CactuStipend ${claimNumber}...`)
             await txn.wait();
+		    
+		    successClaimToast();
           
-            //console.log(`You're in!  See transaction: https://mumbai.polygonscan.com/tx/${txn.hash}`);
             console.log(`You've got funds! Check your wallet. 💵`);
 
             window.location.reload()
@@ -269,6 +331,19 @@ const Manage = () => {
     return (
         
         <main className="App">
+	    
+	<ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+        />
 
         <header>
             <Link to="/" className="home-link">
