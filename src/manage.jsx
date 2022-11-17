@@ -24,9 +24,9 @@ const Manage = () => {
 
 
     const showToast = async () => {
-        toast("Claiming your CactuStipend...", {
+        toast("Claiming from CactuStipend " + claimNumber + "...", {
             position: "top-right",
-            autoClose: 7000,
+            autoClose: 8500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -36,7 +36,7 @@ const Manage = () => {
         };
 
     const successToast = async () => {
-        toast("Claimed your CactuStipend!", {
+        toast("Claimed your CactuStipend" + claimNumber + "!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -45,10 +45,8 @@ const Manage = () => {
         draggable: true,
         progress: undefined,
         });
-
     };
 
-      
 
 
     const fetchStipendStats = async () => {
