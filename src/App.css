@@ -215,11 +215,19 @@
   box-shadow: 5px 10px 9px rgb(9, 209, 9);
 }
 
+.radio-button-container {
+  min-width: 75px;
+  max-width: fit-content;
+  margin: auto;
+  font-size: calc(8px + 2vmin);
+  color: white;
+}
+
 .token-amount-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(12px + 2vmin);
+  font-size: calc(8px + 2vmin);
   color: white;
 }
 
