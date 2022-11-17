@@ -9,7 +9,7 @@ import './App.css';
 import contractAbi from './utils/contractAbi.json';
 import testUSDAbi from './utils/testUSDAbi.json';
 
-const CONTRACT_ADDRESS = "0x105F714a80fB87F21de05428D399F6Aa550199e4";
+const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
 const testLINK_Address = "0x1e4CF3c1eC9c799bc51101c87B145eD2dc1A0307";
 const testMATIC_Address = "0x81c98576E95AF3576Ab4ccd25Bc52b5634769cE9";
 const testETH_Address = "0xeD8d5e4B82d4487e3B0dF0997BD6D312A4Bfc8BC";
