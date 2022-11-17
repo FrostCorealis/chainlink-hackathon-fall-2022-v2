@@ -19,9 +19,9 @@ const Browse = () => {
     const [ joinNumber, setJoinNumber] = useState ('');
 
     const showToast = async () => {
-        toast("Getting you on the list for your CactuStipend...", {
+        toast("Adding you to the list for CactuStipend" + joinNumber + "...", {
             position: "top-right",
-            autoClose: 7000,
+            autoClose: 9500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -45,7 +45,7 @@ const Browse = () => {
     const alreadyJoinedToast = async () => {
         toast.warn("You already joined CactuStipend" + joinNumber, {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 7500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
