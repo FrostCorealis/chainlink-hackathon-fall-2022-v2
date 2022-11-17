@@ -339,7 +339,7 @@ const Create = () => {
                 
             </form>
 
-            <button className='create' onClick={sendDataToContract}>
+            <button className='create-button' onClick={sendDataToContract}>
                 🌵 Create CactuStipend 🌵 </button>
 
 
