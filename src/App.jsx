@@ -247,9 +247,10 @@ const CONTRACT_ADDRESS = "0xB576a883179d6A9018233e5833D9db8F726A764b";
         <img src={chainlinkLogo} className="App-logo" alt="logo" />
         </div>
         <div className="bottom2">
-          <p> Built on Polygon by Team Cactus</p>
+          <p> Built on Polygon by Team Cactus</p> 
           <h5>Chainlink Hackathon Fall 2022</h5>
         </div>
+
 
         </div>
 
