@@ -127,7 +127,7 @@ export default class App extends React.Component {
             </div>
         </div>
         <h1>return to {" "}
-          <a href="https://learn-mumbai.frostc.repl.co/">
+          <a href="https://hackacactus.vercel.app/">
             🌵 CactuStipend 🌵
           </a></h1>
        
