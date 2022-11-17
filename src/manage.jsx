@@ -8,7 +8,7 @@ import contractAbi from './utils/contractAbi.json';
 import ZKPcontractAbi from './utils/ZKPcontractAbi.json';
 import './App.css';
 
-const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
+const CONTRACT_ADDRESS = "0xB576a883179d6A9018233e5833D9db8F726A764b";
 const ZKPPOLYGONID_ADDRESS = "0x3A7772B5e1407524B6D57aaDAD226B4Ed56abFA7";
 
 const Manage = () => {
