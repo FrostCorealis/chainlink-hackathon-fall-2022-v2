@@ -15,14 +15,14 @@ const styles = {
     fontFamily: "sans-serif",
     textAlign: "center",
     background: "#000000",
-    height: "150vh",
+    height: "120vh",
     marginTop: "50px",
   },
   title: {
     color: "#8247E5",
     textStyle: "bold",
     textShadow: "1px 1px 2px white, 5px 5px 25px #9ACD32, 3px 3px 5px #d9c7f7",
-    fontSize: "50px",
+    fontSize: "35px",
   },
   titleContainer: {
     textAlign: "center",
@@ -37,15 +37,16 @@ const styles = {
     margin: "auto",
   },
   qrcontainer: {
-    maxWidth: "650px",
+    maxWidth: "520px",
     background: "#FFFFFF",
     borderStyle: "solid",
     borderWidth: "17px",
     borderColor: "#8247E5",
     margin: "auto",
     marginBottom: "85px",
-    padding: "50px",
-    boxShadow: "3px 3px 29px #d9c7f7, 0px 0px 25px #9ACD32",
+    marginTop: "50px",
+    padding: "30px",
+    boxShadow: "3px 3px 29px #d9c7f7, 5px 5px 25px #9ACD32",
   },
 
 };
@@ -105,16 +106,16 @@ export default class App extends React.Component {
         <img src={polygonLogo} className="poly-logo" alt="logo" />
         </div>
   
-        <h1>
+        <h2>
           First, obtain{" "}
           <a
             href="https://platform-test.polygonid.com/claim-link/f4c0d699-ddf6-44bd-807f-30ae81962039"
             target="_blank"
           >
          {" "}verification credentials{" "}
-          </a>from Polygon ID,</h1> 
-          <h1> and then scan this QR code to join the ZKP Stipend.
-        </h1>
+          </a>from Polygon ID,</h2> 
+          <h2> and then scan this QR code to join the ZKP Stipend.
+        </h2>
 
         <div style={styles.qrcontainer}>
             <div style={styles.qrbox}>
