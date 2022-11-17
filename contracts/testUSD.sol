@@ -10,7 +10,7 @@ contract testUSD is Ownable, ERC20 {
         _mint(address(this), 1000000000000000000000000000000000000000);
     }
 
-    function Mintu(int _amount) public {
+    function Mint(uint _amount) public {
         _mint(msg.sender, _amount);
     }     
     //Ownerless for testing purposes
