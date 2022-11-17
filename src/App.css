@@ -221,7 +221,7 @@
   max-width: 650px;
   min-height: 65vh;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 25px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -231,6 +231,7 @@
   border-color: rgb(9, 209, 9);
   border-radius: 18px;
   padding: 50px;
+  box-shadow: 1px 1px 29px rgb(9, 209, 9);
 }
 
 .radio-button-container {
