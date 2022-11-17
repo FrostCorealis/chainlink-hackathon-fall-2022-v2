@@ -204,6 +204,7 @@ const Create = () => {
       	}
     	} catch (error) {
       		console.log(error)
+		oopsToast();
    		}
   	};
 
@@ -230,7 +231,7 @@ const Create = () => {
     
         } catch (error) {
           console.log(error)
-	oopsToast();
+	
         }
     };
     
