@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Chainlink Hackathon Fall 2022
-// With thanks to Truflation, CryptoZombies, Remix, OpenZeppelin, Alchemy, and Ankr devblog 
+// With thanks to Truflation, CryptoZombies, Remix, OpenZeppelin, Alchemy, Hardhat
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -12,38 +12,17 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
     using Chainlink for Chainlink.Request;
 
     constructor() ConfirmedOwner(msg.sender) {
-        //testUSD (uses DAI)
-        allowToken(0x2C3126191A8eA852f91520D90349928fB607a49d, true, "testUSD", 0x0FCAa9c899EC5A91eBc3D5Dd869De833b06fB046);
-        //LINK
-        allowToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB, true, "Chainlink", 0x12162c3E810393dEC01362aBf156D7ecf6159528);
-        
+        //testUSD (uses DAI feed)
+        //allowToken(0x2C3126191A8eA852f91520D90349928fB607a49d, true, "testUSD", 0x0FCAa9c899EC5A91eBc3D5Dd869De833b06fB046);
+        //testETH
+        //allowToken(0xeD8d5e4B82d4487e3B0dF0997BD6D312A4Bfc8BC, true, "testETH", 0x0715A7794a1dc8e42615F059dD6e406A6594651A);
+        //testMATIC
+        //allowToken(0x81c98576E95AF3576Ab4ccd25Bc52b5634769cE9, true, "testMATIC", 0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada);
+        //testLINK
+        allowToken(0x1e4CF3c1eC9c799bc51101c87B145eD2dc1A0307, true, "testLINK", 0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408);
+
         setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
         }
-
-/*
-
-    Add price feeds for other test tokens (and don't forget that chainlink uses a LINK/MATIC feed
-    on mumbai)
-
-    Approve 1000000000000000000000000000 testUSD on testUSD contract
-
-    FEED IT 0.1 LINK
-    DON'T FORGET
-    IT WILL REVERT OTHERWISE
-    FEED IT 0.1 LINK
-    OR COMMENT OUT TRUFLATION CALL
-
-    function testStipend() public onlyOwner() {
-        createStipend (msg.sender, 
-        0x2C3126191A8eA852f91520D90349928fB607a49d, 
-        100,
-        1,
-        1000000);
-
-        // "cool stipend", 0x2593F5FbFd610504cfD98d0a52770A4FD8202CeA, 0x2C3126191A8eA852f91520D90349928fB607a49d, 100, 1, 1000000
-    } 
-*/
-
 
 //  *  *  *  *  *  STIPEND FUNCTIONS  *  *  *  *  *  //
     
@@ -52,30 +31,28 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         address stipendOwner;        
         uint256 stipendId;
         address stipendToken;
-        //uint8 unitDenomination; //0 for usd, 1 for gbp
-        uint256 paymentAmount; //in usd or gbp
+        uint256 paymentAmount; //in usd
         uint256 paymentInterval; //in hours
         uint256 stipendBalance; //in chosen stipendToken
         uint256 nextInterval; //blocktime + paymentInterval * time unit
         uint256 accumulatedBaseline;
-        //uint256 userCount;
         bool readyForPayment;
         bool exists;
         string stipendTokenName;
     }
 
-    mapping (address => bool) allowedTokens;
-    mapping (address => address) tokenToUSDPriceFeed;
+    mapping (address => bool) public allowedTokens;
+    mapping (address => address) public tokenToUSDPriceFeed;
     mapping (address => string) public stipendTokenNames;
     mapping (uint256 => Stipend) public createdStipends;
     uint256 public stipendIterator = 1;
-    uint256 nextInflationUpkeep;
-    int256 usdInflationPercent;
+    uint256 public nextInflationUpkeep;
+    int256 public usdInflationPercent;
     mapping (address => mapping (uint256 => uint256)) public userBalancesByStipend;
     mapping (address => mapping (uint256 => bool)) public userValidityByStipend;
-    mapping (address => mapping (uint256 => bool)) userRemovedFromStipend;
+    mapping (address => mapping (uint256 => bool)) public userRemovedFromStipend;
 
-    //only allow tokens with 18 decimals and no tax-on-transfer
+    //only allow tokens with 18 decimals, no tax-on-transfer, and a USD-denominated price feed
     function allowToken(address _newToken, bool _allow, string memory _name, address _pricefeed) public onlyOwner {
         tokenToUSDPriceFeed[_newToken] = _pricefeed;
         allowedTokens[_newToken] = _allow;
@@ -91,7 +68,6 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         string memory _stipendName,
         address _stipendOwner, 
         address _stipendToken, 
-        //uint8 _unitDenomination, 
         uint256 _paymentAmount,
         uint256 _paymentInterval,
         uint256 _stipendBalance) public {
@@ -107,27 +83,17 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         stipend.stipendOwner = _stipendOwner;       
         stipend.stipendId = _stipendId;
         stipend.stipendToken = _stipendToken;
-        //stipend.unitDenomination = _unitDenomination;
         stipend.paymentAmount = _paymentAmount;
         stipend.paymentInterval = _paymentInterval;
         stipend.stipendBalance = _stipendBalance * uint256(10 ** 18);
         stipend.accumulatedBaseline = 0;
-        stipend.nextInterval = block.timestamp + (_paymentInterval * 1); //(default 3600, can set custom time later
-        //stipend.userCount = 0;
+        stipend.nextInterval = block.timestamp + (_paymentInterval * 3600); //default 1 hour, can set custom time
         stipend.readyForPayment = false;
         stipend.exists = true;
         stipend.stipendTokenName = stipendTokenNames[_stipendToken];
         emit StipendCreated(_stipendOwner, _stipendId);
         }
     
-    function getNumberofStipends() public view returns(uint256) {
-        return stipendIterator;
-    }
-        
-    function getStipend(uint256 _stipendId) public view returns(Stipend memory) {
-        return createdStipends[_stipendId];
-    }
-
     function getAllStipends() public view returns (Stipend[] memory allStipends) {
         allStipends = new Stipend[](stipendIterator - 1);
         for (uint256 i = 1; i < stipendIterator; i++) {
@@ -170,7 +136,6 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
     }
 
     function userJoinStipend(uint256 _stipendId, address _user) public {
-        //require EligibilityCriterion == true;
         require (_user == msg.sender);
         require (_stipendId != 0);
         require (checkStipendExistence(_stipendId) == true);
@@ -178,7 +143,6 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         require (userRemovedFromStipend[_user][_stipendId] == false);
         userValidityByStipend[_user][_stipendId] = true;
         userBalancesByStipend[_user][_stipendId] = createdStipends[_stipendId].accumulatedBaseline;
-        //createdStipends[_stipendId].userCount ++;
         emit StipendJoined(_user, _stipendId);
     }
 
@@ -195,7 +159,6 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         require (checkUserValidity(_stipendId, _recipient) == false);
         userValidityByStipend[_recipient][_stipendId] = true;
         userBalancesByStipend[_recipient][_stipendId] = createdStipends[_stipendId].accumulatedBaseline;
-        //createdStipends[_stipendId].userCount ++;
         emit StipendJoined(_recipient, _stipendId);
         }
 
@@ -221,7 +184,6 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         }
             userJoinedStipends = new JoinedStipends[](joinedStipends);
             uint256 j;
-            
             for (uint256 i = 1; i < stipendIterator; i++) {
                 if (checkUserValidity(i, _user) == true) {
                 JoinedStipends memory stipendInfo;
@@ -238,27 +200,7 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         return userJoinedStipends;
     }
 
-/*
-
-    function getUserJoinedStipends(address _user) public view returns (Stipend[] memory userJoinedStipends) {
-        uint256 joinedStipends;
-        for (uint256 i = 1; i < stipendIterator; i++) {
-            if (checkUserValidity(i, _user) == true) {
-                joinedStipends++;
-            }
-        }
-            userJoinedStipends = new Stipend[](joinedStipends);
-            uint256 j;
-            for (uint256 i = 1; i < stipendIterator; i++) {
-                if (checkUserValidity(i, _user) == true) {
-                userJoinedStipends[joinedStipends - (joinedStipends - (1 * j))] = createdStipends[i];
-                j++;
-                }
-        }
-        return userJoinedStipends;
-    }
-*/
-       function getUserOwnedStipends(address _user) public view returns (Stipend[] memory userOwnedStipends) {
+    function getUserOwnedStipends(address _user) public view returns (Stipend[] memory userOwnedStipends) {
         uint256 ownedStipends;
         for (uint256 i = 1; i < stipendIterator; i++) {
             if (checkStipendOwnership(i, _user) == true) {
@@ -280,7 +222,7 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
     function initiatePaymentUpdate() public {
         for (uint256 i = 1; i < stipendIterator; i++) {
             if (createdStipends[i].nextInterval <= block.timestamp) {
-                createdStipends[i].nextInterval = block.timestamp + (createdStipends[i].paymentInterval * 1); //3600
+                createdStipends[i].nextInterval = block.timestamp + (createdStipends[i].paymentInterval * 3600); //blocktime + hours
                 createdStipends[i].readyForPayment = true;
             }
         }
@@ -299,6 +241,7 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         }
 
     function fulfillInflationWei(bytes32 _requestId, bytes memory _inflation) virtual public recordChainlinkFulfillment(_requestId) {
+        require (msg.sender == oracleId);
         usdInflationPercent = toInt256(_inflation);
         emit InflationUpdated(usdInflationPercent);
         }
@@ -333,7 +276,6 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         require (createdStipends[_stipendId].stipendOwner == msg.sender);
         userRemovedFromStipend[_user][_stipendId] = true;
         userValidityByStipend[_user][_stipendId] = false;
-        //createdStipends[_stipendId].userCount --;
     }
 
 
