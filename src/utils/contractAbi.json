@@ -577,6 +577,25 @@
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "allowedTokens",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "_stipendToken",
 				"type": "address"
 			}
@@ -822,100 +841,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getNumberofStipends",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_stipendId",
-				"type": "uint256"
-			}
-		],
-		"name": "getStipend",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "stipendName",
-						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "stipendOwner",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "stipendId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "stipendToken",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "paymentAmount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "paymentInterval",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "stipendBalance",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "nextInterval",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "accumulatedBaseline",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "readyForPayment",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "exists",
-						"type": "bool"
-					},
-					{
-						"internalType": "string",
-						"name": "stipendTokenName",
-						"type": "string"
-					}
-				],
-				"internalType": "struct CactuStipend.Stipend",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -1049,6 +974,19 @@
 	},
 	{
 		"inputs": [],
+		"name": "nextInflationUpkeep",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "owner",
 		"outputs": [
 			{
@@ -1098,6 +1036,38 @@
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"name": "tokenToUSDPriceFeed",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "usdInflationPercent",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			},
 			{
 				"internalType": "uint256",
@@ -1135,6 +1105,30 @@
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "userRemovedFromStipend",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
