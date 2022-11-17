@@ -218,19 +218,10 @@
 .radio-button-container {
   min-width: 75px;
   max-width: fit-content;
+  text-align:left;
   margin: auto;
-  font-size: calc(8px + 2vmin);
   color: white;
 }
-
-.token-amount-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(8px + 2vmin);
-  color: white;
-}
-
 
 .h3-create {
   color: yellowgreen;
