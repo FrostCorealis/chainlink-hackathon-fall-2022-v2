@@ -255,12 +255,15 @@ const Create = () => {
 
         <div>
             <h1>Here's where you can build your own stipend.</h1>
-            <h2>After you select your token, you will mint & approve it.</h2>
+            <h2 className="h3-create">After you select your token, you will mint & approve it.</h2>
+        </div>
+
+        <div>
+            <hr className="hr-green-line2" />  
         </div>
 
         <div>
             <h2>Mint & approve your {selectedToken}.</h2>
-
                 <button onClick={mintTestTokens} className="cta-button mint-claim-button">
 						🌵 Mint 10,000 {selectedToken} 🌵
 				</button>
