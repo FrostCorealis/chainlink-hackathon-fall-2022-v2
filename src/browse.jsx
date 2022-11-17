@@ -8,8 +8,8 @@ import contractAbi from './utils/contractAbi.json';
 import ZKPcontractAbi from './utils/ZKPcontractAbi.json';
 import './App.css';
 
-const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
-const ZKPPOLYGONID_ADDRESS = "0x3A7772B5e1407524B6D57aaDAD226B4Ed56abFA7"; 
+const CONTRACT_ADDRESS = "0x105F714a80fB87F21de05428D399F6Aa550199e4";
+const ZKPPOLYGONID_ADDRESS = "0xa3B8F80d7f894ffEB678eD9E7AC8C7178Dae8fCF"; //placeholder
 
 const Browse = () => {
 
@@ -17,12 +17,11 @@ const Browse = () => {
     const [totalStipends, setTotalStipends] = useState(0);
     const [stipendList, setStipendList] = useState([]);
     const [ joinNumber, setJoinNumber] = useState ('');
-    
-    
-    const startJoinToast = async () => {
+
+    const showToast = async () => {
         toast("Getting you on the list for your CactuStipend...", {
             position: "top-right",
-            autoClose: 9500,
+            autoClose: 7000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -31,8 +30,8 @@ const Browse = () => {
             });
         };
 
-    const successJoinToast = async () => {
-        toast("You’re in!", {
+    const successToast = async () => {
+        toast("Your're in!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -41,32 +40,10 @@ const Browse = () => {
         draggable: true,
         progress: undefined,
         });
-    };
-    
-    const startJoinZKPToast = async () => {
-        toast("Getting you on the list for the special ZKP CactuStipend...", {
-            position: "top-right",
-            autoClose: 9500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
-        };
 
-    const successJoinZKPToast = async () => {
-        toast("YCongrats!  Your Polygon ID credentials got you in!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
     };
-       
+
+          
     
     const numberOfStipends = async () => {
   
@@ -153,6 +130,7 @@ const Browse = () => {
                 <div className="zkp-stipend-stats">
                 <p className="stipend-name">{' '}ZKP Stipend{' '}</p>
                 <p>Pays 9999 zkDoubloons every hour.</p>
+                <p>Requirement: PolygonID</p>
                 <div className="zkp-id-box">      
                 <p className="id-name">🌵 Stipend ID:{' '}{0}{' '}🌵</p>
                 </div>
@@ -165,7 +143,7 @@ const Browse = () => {
                                     
                                             <p className="stipend-name">{' '}{stipend.stipendName}{' '}</p>
                             </div>      
-                                        <p>Pays ${stipend.paymentAmount} of {stipend.stipendToken} every {stipend.paymentInterval} days.</p>
+                                        <p>Pays ${stipend.paymentAmount} of {stipend.stipendToken} every {stipend.paymentInterval} hours.</p>
                                         <div className="id-box">      
                                         <p className="id-name">🌵 Stipend ID:{' '}{stipend.stipendId}{' '}🌵</p>
                                         </div>
@@ -178,6 +156,9 @@ const Browse = () => {
         </div>);
         }
     };
+
+   
+       
 
 
     const joinStipend = async () => {
@@ -202,16 +183,19 @@ const Browse = () => {
             const connectedContract = new ethers.Contract(ZKPPOLYGONID_ADDRESS, ZKPcontractAbi.abi, signer);
             
             console.log("Paying for gas...")
+
+            
+
+
             let txn = await connectedContract.userJoinStipend(1, signer.getAddress());
-             
-                startJoinZKPToast();
-    
-            console.log(`Getting you on the list for the special ZKP CactuStipend ${joinNumber}...`)
+            showToast();
+            console.log(`Getting you on the CactuStipend list for CactuStipend ${joinNumber}...`)
             await txn.wait();
-                
-                successJoinToast();
           
-            console.log(`Congrats!  Your Polygon ID credentials got you in!`);
+            console.log(`You're in!`);
+
+            successToast();
+                
             }
 
             else {
@@ -221,13 +205,10 @@ const Browse = () => {
     
             console.log("Paying for gas...")
             let txn = await connectedContract.userJoinStipend(joinNumber, signer.getAddress());
-                
-                startJoinToast();
-    
+            showToast();
             console.log(`Getting you on the CactuStipend list for CactuStipend ${joinNumber}...`)
             await txn.wait();
-                
-                successJoinToast();
+            successToast();
           
             console.log(`You're in!`);
             }
@@ -281,10 +262,10 @@ const Browse = () => {
     return (
         
         <main className="App">
-        
+
         <ToastContainer
-            position="top-right"
-            autoClose={5000}
+            position="top-left"
+            autoClose={8000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -298,7 +279,7 @@ const Browse = () => {
             <header>
                 <Link to="/" className="home-link">
                     <div>
-                        <h2>🌵 CactuStipend 🌵</h2>
+                        <h2>← 🌵 CactuStipend 🌵</h2>
                     </div>
                 </Link>
             </header>
@@ -307,7 +288,6 @@ const Browse = () => {
                 <h1 className="subtitle">Here's where you can see all the available stipends and select one to join.</h1>
                 <h2>Make your selection, enter the stipend ID, and then click join.</h2>
                 <h3>After you join a stipend, visit the Manage page to check your balance.</h3>
-                <h3>You'll be able to claim your balance after the allotted time has passed, or you can let it grow.</h3>
             </div>
 
         <div>
