@@ -42,8 +42,8 @@
 /* zkp page */
 
 .poly-logo {
-  width: 90px;
-  height: 90px;
+  width: 75px;
+  height: 75px;
   margin-right: 50px;
   margin-left: 50px;
 }
@@ -99,7 +99,8 @@
   align-items: center;
   padding: 10px 15px;
   border-radius: 5px;
-  border-style: solid 3px;
+  border-style: solid; 
+  border-width: 5px;
   border-color: white;
   margin: 20px 20px 20px;
   font-size: 18px;
@@ -405,7 +406,8 @@ p {
   border-width: 1px;
   border-color: white;
   padding: 12px 20px;
-  margin-left: 80%;
+  margin-left: 75%;
+  margin-right: 25px;
   margin-top: 10px;
   box-shadow: 5px 10px 12px rgb(9, 209, 9);
 }
@@ -594,4 +596,3 @@ a:active {
     background-position: 0% 50%;
   }
 }
-
