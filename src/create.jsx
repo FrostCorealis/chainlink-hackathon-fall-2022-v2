@@ -62,7 +62,7 @@ const Create = () => {
         };
 
     const successCreateToast = async () => {
-        toast("Your new CactuStipend is ready for action!", {
+        toast("Your CactuStipend is ready for action!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -96,8 +96,19 @@ const Create = () => {
         draggable: true,
         progress: undefined,
         });
-
     };
+	
+	const needToMintToast = async () => {
+        toast.error("Please mint your" + selectedToken + "before creating...", {
+            position: "top-right",
+            autoClose: 6500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    };	
 
 
     const mintTestTokens = async () => {
@@ -219,6 +230,7 @@ const Create = () => {
     
         } catch (error) {
           console.log(error)
+	needToMintToast();
         }
     };
     
