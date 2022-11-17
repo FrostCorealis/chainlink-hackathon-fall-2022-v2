@@ -107,14 +107,16 @@ export default class App extends React.Component {
         </div>
   
         <h2>
-          First, obtain{" "}
+          1) First, {" "}
           <a
             href="https://platform-test.polygonid.com/claim-link/f4c0d699-ddf6-44bd-807f-30ae81962039"
             target="_blank"
           >
-         {" "}verification credentials{" "}
-          </a>from Polygon ID,</h2> 
-          <h2> and then scan this QR code to join the ZKP Stipend.
+         {" "}click here to obtain verification credentials
+          </a>.</h2> 
+          <h2>2) Scan the QR code below to gain access to the ZKP Stipend.
+        </h2>
+        <h2>3) Navigate back to Browse to join.
         </h2>
 
         <div style={styles.qrcontainer}>
@@ -126,9 +128,9 @@ export default class App extends React.Component {
                 />
             </div>
         </div>
-        <h1>return to {" "}
-          <a href="https://hackacactus.vercel.app/">
-            🌵 CactuStipend 🌵
+        <h1>
+          <a href="https://learn-mumbai.frostc.repl.co/">
+          ← return to {" "}🌵 CactuStipend 🌵
           </a></h1>
        
       </div>
