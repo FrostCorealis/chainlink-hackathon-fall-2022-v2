@@ -284,12 +284,11 @@ const Create = () => {
                         
 					/>
 
-            <div className="radio-button-container">  
-                  
 
             <h3 className="h3-create">Which token will you use to build your stipend?</h3>
 
-{/* OPTION ONE */}
+            <div className="radio-button-container"> 
+
     <Form.Group inline>
         <Form.Radio label="testLINK" checked={selectedToken === 'testLINK'} value="testLINK" onClick={() => setToken('testLINK') & setTokenAddress(testLINK_Address)} />
         <Form.Radio label="testMATIC" checked={selectedToken === 'testMATIC'} value="testMATIC" onClick={() => setToken('testMATIC') & setTokenAddress(testMATIC_Address)} />
@@ -300,7 +299,6 @@ const Create = () => {
             </div>
 
      
-
 
             <h3 className="h3-create">How often will your stipend be distributed?</h3>
             <h4>This stipend will be distributed every ____ hour(s).</h4>
