@@ -6,7 +6,7 @@ import ZKPcontractAbi from './utils/ZKPcontractAbi.json';
 import './App.css';
 
 const CONTRACT_ADDRESS = "0x6f71F58a56FBF14b7229028F11fcC16e0f97226f";
-const ZKPPOLYGONID_ADDRESS = "0x3A7772B5e1407524B6D57aaDAD226B4Ed56abFA7"; 
+const ZKPPOLYGONID_ADDRESS = "0xa3B8F80d7f894ffEB678eD9E7AC8C7178Dae8fCF"; //placeholder
 
 const Manage = () => {
 
@@ -19,118 +19,6 @@ const Manage = () => {
     const [ claimNumber, setClaimNumber] = useState ('');
 
       
-
-    const getBalance = async () => {
-  
-        try {
-          const { ethereum } = window;
-          
-      
-        if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-            const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, provider);
-
-            const accounts = await ethereum.request({ method: 'eth_accounts' });
-
-			const account = accounts[0];
-			console.log('Found an authorized CACTUS account:', account);
-
-    
-            console.log("Checking contract data for the balance of your CactuStipend...")
-            const pendingBalance = await connectedContract.userPendingBalance(1, account);
-        
-            console.log("Waiting for the data to arrive...")
-
-            const pendingBalanceMod = (pendingBalance / (10**18))
-
-            setCurrentBalance(currentBalance + pendingBalanceMod);
-             
-            console.log(`Your current balance is ${pendingBalance}`);
-
-      
-        } else {
-            console.log("Something's broken...go fix it...");
-        }
-        } catch (error) {
-          console.log(error)
-      } 
-      };
-      
-    
-/*
-    const getYourStipend = async () => {
-  
-    	try {
-      		const { ethereum } = window;
-
-            const accounts = await ethereum.request({ method: 'eth_accounts' });
-
-              if (accounts.length !== 0) {
-                  const account = accounts[0];
-                  console.log('Found an authorized account:', account);
-                  setCurrentAccount(account);
-              } else {
-                  console.log('No authorized account found');
-            }
-  
-      	if (ethereum) {
-        	const provider = new ethers.providers.Web3Provider(ethereum);
-        	const signer = provider.getSigner();
-        	const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
-  
-        	console.log("Paying for gas...")
-        	let txn = await connectedContract.userClaimStipend(1, signer.getAddress());
-  
-        	console.log("Your current cactus balance is ", currentBalance)
-        	await txn.wait();
-          
-        	console.log(`Done!  See transaction: https://mumbai.polygonscan.com/tx/${txn.hash}`);
-  
-      	} else {
-        	console.log("Ethereum object doesn't exist!");
-      	}
-    	} catch (error) {
-      		console.log(error)
-   		}
-  	};
-*/
-
-// THIS IS THE BEGINNING OF THE STUFF PASTED FROM BROWSE
-      
-    
-    const numberOfStipends = async () => {
-  
-        try {
-          const { ethereum } = window;
-      
-        if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-            const signer = provider.getSigner();
-            const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
-      
-            console.log("Checking contract data for the number of CactuStipends...")
-            let stipendIterator = await connectedContract.getUserJoinedStipends(signer.getAddress());
-      
-           console.log("Waiting for the data to arrive...")
-            //await txn.wait();
-
-            console.log(`There are currently ${stipendIterator -= 1} stipends.`);
-            console.log(stipendIterator -= 1) ;
-
-
-            setTotalStipends(stipendIterator -= 1) ;
-                      
-            console.log(`There are currently ${totalStipends} and also ${stipendIterator}`);
-      
-        } else {
-            console.log("Something's broken...go fix it...");
-        }
-    
-        } catch (error) {
-          console.log(error)
-        }
-    }; 
-
 
     const fetchStipendStats = async () => {
   
@@ -223,7 +111,8 @@ const Manage = () => {
         return (
             <div className="stipend-container">
                 <h1 className="subtitle">Browse your stipends.</h1>
-                <div className = "stipend-list">
+                <div className="stipend-list">
+                 
                 {renderZKPStipend()}
                     { stipendList.map((stipend, index) => {
                                               
@@ -253,12 +142,13 @@ const Manage = () => {
     const renderZKPStipend = () => {
         if (zkpStatus.length > 0) {
         console.log("GO ZPK GO ZPK GO ZPK");
-        //console.log ({stipendsCreated}, "test");
+		
         console.log("Your ZPK status is:", zkpStatus)
     
         return (
             <div className="stipend-container">
-                <div className = "stipend-list">
+                <div className="stipend-list">
+                    
     
                     { zkpStatus.map((stipend, index) => {
                                               
@@ -311,7 +201,6 @@ const Manage = () => {
                 console.log(`Claiming your balance from your ZPK CactuStipend ${claimNumber}...`)
                 await txn.wait();
               
-                //console.log(`You're in!  See transaction: https://mumbai.polygonscan.com/tx/${txn.hash}`);
                 console.log(`You've got ZPK Dubloons!  Check your wallet. 😎`);
                 }
             else {
@@ -343,7 +232,7 @@ const Manage = () => {
 
       const renderClaimButton = () => (
     
-            <div className="claim-input-container">
+            <div className="join-input-container">
 
             <h2>Which stipend would you like to claim from?</h2>
             <title>Enter the stipend ID:</title>
@@ -371,17 +260,10 @@ const Manage = () => {
         fetchZKPStatus();
     }, [])
 
-    useEffect(() => {
-        numberOfStipends();
-    }, [])
 
     useEffect(() => {
         fetchStipendStats();
     }, [])    
-
-    useEffect(() => {
-        getBalance();
-      }, [])
 
 
     return (
