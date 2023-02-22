@@ -75,7 +75,6 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         require (allowedTokens[_stipendToken] == true);
         require (_stipendBalance > 0 && _stipendBalance * uint256(10 ** 18) <= IERC20(_stipendToken).balanceOf(msg.sender));
         require (_paymentAmount >= 0);
-        IERC20(_stipendToken).transferFrom(msg.sender, address(this), _stipendBalance * uint256(10 ** 18));
         uint256 _stipendId = stipendIterator;
         stipendIterator++;
         Stipend storage stipend = createdStipends[_stipendId];
@@ -91,6 +90,7 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         stipend.readyForPayment = false;
         stipend.exists = true;
         stipend.stipendTokenName = stipendTokenNames[_stipendToken];
+        IERC20(_stipendToken).transferFrom(msg.sender, address(this), _stipendBalance * uint256(10 ** 18));
         emit StipendCreated(_stipendOwner, _stipendId);
         }
     
@@ -109,16 +109,16 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
     function addToBalance(uint256 _stipendId, address _stipendToken, uint256 _amount) public {
         require (createdStipends[_stipendId].stipendToken == _stipendToken);
         require(_amount > 0 && _amount * uint256(10 ** 18) <= IERC20(_stipendToken).balanceOf(msg.sender));
-        IERC20(_stipendToken).transferFrom(msg.sender, address(this), _amount * uint256(10 ** 18));
         createdStipends[_stipendId].stipendBalance = createdStipends[_stipendId].stipendBalance + (_amount * uint256(10 ** 18));
+        IERC20(_stipendToken).transferFrom(msg.sender, address(this), _amount * uint256(10 ** 18));
         emit AddedToBalance(msg.sender, _stipendId, _amount);
     }  
 
      function withdrawFromBalance(uint256 _stipendId, uint256 _amount) public {
         require (createdStipends[_stipendId].stipendOwner == msg.sender);
         require(_amount > 0 && _amount * uint256(10 ** 18) <= createdStipends[_stipendId].stipendBalance);
-        IERC20(createdStipends[_stipendId].stipendToken).transfer(msg.sender, _amount * uint256(10 ** 18));
         createdStipends[_stipendId].stipendBalance = createdStipends[_stipendId].stipendBalance - (_amount * uint256(10 ** 18));
+        IERC20(createdStipends[_stipendId].stipendToken).transfer(msg.sender, _amount * uint256(10 ** 18));
         emit WithdrewFromBalance(msg.sender, _stipendId, _amount);
     }  
 
@@ -266,9 +266,9 @@ contract CactuStipend is ChainlinkClient, ConfirmedOwner {
         require (createdStipends[_stipendId].stipendBalance >= createdStipends[_stipendId].accumulatedBaseline - userBalancesByStipend[_user][_stipendId]);
         require (createdStipends[_stipendId].accumulatedBaseline - userBalancesByStipend[_user][_stipendId] >= 0);
         uint256 _transferBalance = (createdStipends[_stipendId].accumulatedBaseline - userBalancesByStipend[_user][_stipendId]);
-        IERC20(createdStipends[_stipendId].stipendToken).transfer(_user, _transferBalance);
         createdStipends[_stipendId].stipendBalance = createdStipends[_stipendId].stipendBalance - _transferBalance;
         userBalancesByStipend[_user][_stipendId] = createdStipends[_stipendId].accumulatedBaseline;
+        IERC20(createdStipends[_stipendId].stipendToken).transfer(_user, _transferBalance);
         emit ClaimedStipend(_user, _stipendId, _transferBalance);
     }
 
